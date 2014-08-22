@@ -1,12 +1,3 @@
 *.py[cod]
 .DS_Store
 *.swp
-build
-dist
-*.egg-info
-run.py
-.adiumsh
-tests/secret.py
-test-output
-.tox
-test_run.py
