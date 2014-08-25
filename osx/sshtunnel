@@ -9,4 +9,4 @@ cmd="ssh -C2qTnN -D 8080"
 
 
 [ "$#" -eq 1 ] && { echo "$cmd $1"; $cmd "$1"; }
-[ "$#" -ne 1 ] && { echo "usage: $cmd_name username@hostname"; }
+[ "$#" -ne 1 ] && { echo "usage: $cmd_name [username@]hostname"; }
