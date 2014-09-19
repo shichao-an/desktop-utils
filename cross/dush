@@ -1,0 +1,9 @@
+#/bin/bash
+# Print total disk usage of specified directories
+
+if [ "$#" -eq 0 ]
+then
+	du -sh .
+else
+	du -sh "$@"
+fi
