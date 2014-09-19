@@ -5,5 +5,5 @@
 cmd_name=$(basename $0)
 cmd='netstat -nr -f inet'
 
-echo "$cmd_name"
+echo "$cmd"
 $cmd
