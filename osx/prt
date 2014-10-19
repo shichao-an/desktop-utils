@@ -2,7 +2,6 @@
 # Print IP routing table with netstat
 
  
-cmd_name=$(basename $0)
 cmd='netstat -nr -f inet'
 
 echo "$cmd"
