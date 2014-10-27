@@ -1,0 +1,4 @@
+#!/bin/bash
+# List full path
+
+ls $1 -d -G $PWD/*
