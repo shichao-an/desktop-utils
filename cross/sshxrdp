@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# example:
+# sshxrdp -p 8888 HOSTNAME
+
+ssh -qnN -L 3389:127.0.0.1:3389 "$@"
+
