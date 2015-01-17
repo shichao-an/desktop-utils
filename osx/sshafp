@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Tunnel AFP protocol over SSH using local port forwarding
+
+# usage:
+# sshafp host[:afphost] [options]
+
+
+usage='sshafp host[:afphost] [options]'
+show_help() {
+   echo "$usage" >&2 
+}
+lsof_local() {
+    lsof -i :15548 > /dev/null
+}
+set -x
+[ $# -lt 1 ] && { echo "$usage" >&2; exit 1; }
+if printf "%s\n" "$@" | grep '^\(\-h\|--help\)$' > /dev/null
+then 
+    show_help
+    exit 0
+fi
+
+declare -a hostgrp=($(echo "$1" | sed 's/:/ /g'))
+host=${hostgrp[0]}
+afphost="127.0.0.1"
+[ ${#hostgrp[@]} -gt 1 ] && afphost=${hostgrp[1]}
+
+shift
+
+if ! lsof_local
+then
+    ssh -qnN -L 15548:$afphost:548 $host "$@" &
+    trap "{ kill $!; }" SIGINT SIGTERM
+fi
+
+while true
+do
+    if lsof_local
+    then
+        open afp://127.0.0.1:15548
+        break
+    else
+        sleep 2
+    fi
+done
+
+wait
