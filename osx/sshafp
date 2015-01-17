@@ -12,7 +12,6 @@ show_help() {
 lsof_local() {
     lsof -i :15548 > /dev/null
 }
-set -x
 [ $# -lt 1 ] && { echo "$usage" >&2; exit 1; }
 if printf "%s\n" "$@" | grep '^\(\-h\|--help\)$' > /dev/null
 then 
@@ -29,14 +28,16 @@ shift
 
 if ! lsof_local
 then
+    echo "Connecting to $host..."
     ssh -qnN -L 15548:$afphost:548 $host "$@" &
-    trap "{ kill $!; }" SIGINT SIGTERM
+    trap "{ echo 'Connection closed.'; kill $!; }" SIGINT SIGTERM
 fi
-
 while true
 do
     if lsof_local
     then
+        echo 'Connection established.'
+        echo 'Opening afp://127.0.0.1:15548 ...'
         open afp://127.0.0.1:15548
         break
     else
