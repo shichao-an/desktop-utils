@@ -1,0 +1,11 @@
+#!/bin/bash
+# Restart firewall on OS X 10.9 and 10.10
+# This script only works if you already turned on your firewall
+
+fw=/usr/libexec/ApplicationFirewall/socketfilterfw
+if $fw --getglobalstate | grep 'Firewall is disabled.' > /dev/null
+then
+    echo 'Firewall is turned off.' >&2
+else
+    sudo $fw --setglobalstate off && sudo $fw --setglobalstate on
+fi
