@@ -2,10 +2,10 @@
 # Tunnel AFP protocol over SSH using local port forwarding
 
 # usage:
-# sshafp host[:afphost] [ssh options]
+# sshafp host[:afphost] [ssh_options]
 
 
-usage='sshafp host[:afphost] [ssh options]'
+usage='sshafp host[:afphost] [ssh_options]'
 
 show_help() {
    echo "$usage" >&2 
