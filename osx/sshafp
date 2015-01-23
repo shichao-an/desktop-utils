@@ -2,16 +2,21 @@
 # Tunnel AFP protocol over SSH using local port forwarding
 
 # usage:
-# sshafp host[:afphost] [options]
+# sshafp host[:afphost] [ssh options]
 
 
-usage='sshafp host[:afphost] [options]'
+usage='sshafp host[:afphost] [ssh options]'
+
 show_help() {
    echo "$usage" >&2 
 }
+
+
 lsof_local() {
     lsof -i :15548 > /dev/null
 }
+
+
 [ $# -lt 1 ] && { echo "$usage" >&2; exit 1; }
 if printf "%s\n" "$@" | grep '^\(\-h\|--help\)$' > /dev/null
 then 
@@ -32,6 +37,7 @@ then
     ssh -qnN -L 15548:$afphost:548 $host "$@" &
     trap "{ echo 'Connection closed.'; kill $!; }" SIGINT SIGTERM
 fi
+
 while true
 do
     if lsof_local
