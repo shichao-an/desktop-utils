@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# Tunnel RDP protocol over SSH using local port forwarding
+# Requires freerdp installed
+
+# usage:
+# sshrdp host[:rdphost] [ssh_options]
+
+usage='sshrdp host[:rdphost] [ssh_options]'
+
+show_help() {
+   echo "$usage" >&2 
+}
+
+
+lsof_local() {
+    lsof -i :3389 > /dev/null
+}
+
+
+[ $# -lt 1 ] && { echo "$usage" >&2; exit 1; }
+
+if ! which xfreerdp > /dev/null
+then
+    echo 'xfreedrp command not found. Is freerdp installed?' >&2
+    exit 1
+fi
+
+if printf "%s\n" "$@" | grep '^\(\-h\|--help\)$' > /dev/null
+then 
+    show_help
+    exit 0
+fi
+
+declare -a hostgrp=($(echo "$1" | sed 's/:/ /g'))
+host=${hostgrp[0]}
+rdphost="127.0.0.1"
+[ ${#hostgrp[@]} -gt 1 ] && rdphost=${hostgrp[1]}
+
+shift
+
+if ! lsof_local
+then
+    echo "Connecting to $host..."
+    ssh -qnN -L 3389:$rdphost:3389 $host "$@" &
+    trap "{ echo 'Connection closed.'; kill $!; }" SIGINT SIGTERM
+fi
+
+while true
+do
+    if lsof_local
+    then
+        echo 'Connection established.'
+        echo 'Opening rdp://localhost:3389 ...'
+        xfreerdp localhost
+        break
+    else
+        sleep 2
+    fi
+done
+
+wait
