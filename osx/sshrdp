@@ -51,7 +51,7 @@ do
     then
         echo 'Connection established.'
         echo 'Opening rdp://localhost:3389 ...'
-        xfreerdp localhost
+        xfreerdp -x m localhost
         break
     else
         sleep 2
