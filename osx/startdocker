@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Source this script using source or . instead of running it
 
 boot2docker start
 $(boot2docker shellinit)
