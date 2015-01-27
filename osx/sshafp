@@ -35,7 +35,8 @@ if ! lsof_local
 then
     echo "Connecting to $host..."
     ssh -qnN -L 15548:$afphost:548 $host "$@" &
-    trap "{ echo 'Connection closed.'; kill $!; }" SIGINT SIGTERM
+    trap "{ echo 'Connection closed.'; ps -p $! > /dev/null && kill $!; \
+        exit; }" SIGINT SIGTERM
 fi
 
 while true
