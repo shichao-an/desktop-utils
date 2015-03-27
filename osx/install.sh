@@ -1,8 +1,8 @@
 #!/bin/bash
 # Install script commands to /usr/local/bin
 
-localbin='/usr/local/bin'
-script_name=$(basename $0)
+LOCALBIN='/usr/local/bin'
+SCRIPT_NAME=$(basename $0)
 
 warning='WARN: Make sure /usr/local/bin is added to PATH'
 if ! echo "$PATH" | grep '/usr/local/bin' > /dev/null
@@ -12,6 +12,9 @@ then
 fi
 for cmd in *;
 do
-    [ "$cmd" != "$script_name" ] && { echo "Copying $cmd ..."; cp "$cmd" "$localbin/$cmd"; }
+    [ "$cmd" != "$SCRIPT_NAME" ] && {
+        echo "Copying $cmd ..."
+        cp "$cmd" "$LOCALBIN/$cmd"
+    }
 done
 echo 'Done.'

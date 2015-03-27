@@ -6,10 +6,10 @@
 # On the remote host, the user must have NOPASSWD settings for `pm-suspend`
 # command in /etc/sudoers
 
-cmd_name=$(basename $0)
-usage="usage: $cmd_name HOSTNAME [USERNAME]"
+CMD_NAME=$(basename $0)
+USAGE="usage: $CMD_NAME HOSTNAME [USERNAME]"
 
-[ $# -gt 2 -o $# -lt 1 ] && { echo "$usage" >&2; exit 1; }
+[ $# -gt 2 -o $# -lt 1 ] && { echo "$USAGE" >&2; exit 1; }
 hostname="$1"
 username="$2"
 [ -n "$username" ] && uri="$username@$hostname" || uri="$hostname"

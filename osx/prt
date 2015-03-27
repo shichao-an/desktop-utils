@@ -2,7 +2,7 @@
 # Print IP routing table with netstat
 
  
-cmd='netstat -nr -f inet'
+CMD='netstat -nr -f inet'
 
-echo "$cmd"
-$cmd
+echo "$CMD"
+$CMD

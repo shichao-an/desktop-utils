@@ -5,10 +5,10 @@
 # usage:
 # sshrdp host[:rdphost] [ssh_options]
 
-usage='sshrdp host[:rdphost] [ssh_options]'
+USAGE='sshrdp host[:rdphost] [ssh_options]'
 
 show_help() {
-   echo "$usage" >&2 
+   echo "$USAGE" >&2 
 }
 
 
@@ -17,7 +17,7 @@ lsof_local() {
 }
 
 
-[ $# -lt 1 ] && { echo "$usage" >&2; exit 1; }
+[ $# -lt 1 ] && { echo "$USAGE" >&2; exit 1; }
 
 if ! which xfreerdp > /dev/null
 then

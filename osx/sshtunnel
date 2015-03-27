@@ -4,11 +4,11 @@
 # to the remote machine
 
 
-cmd_name=$(basename $0)
-hostname=$1
-port=${2:-8080}
-cmd="ssh -C2qTnN -D $port $hostname"
-usage="usage: $cmd_name [username@]hostname [port]"
+CMD_NAME=$(basename $0)
+HOSTNAME=$1
+PORT=${2:-8080}
+CMD="ssh -C2qTnN -D $PORT $HOSTNAME"
+USAGE="usage: $CMD_NAME [username@]hostname [port]"
 
-[ "$#" -gt 2 ] && { echo "$usage" >&2; exit 1; }
-[ -n "$hostname" ] && { echo "$cmd"; $cmd; } || { echo "$usage" >&2; exit 1; }
+[ "$#" -gt 2 ] && { echo "$USAGE" >&2; exit 1; }
+[ -n "$HOSTNAME" ] && { echo "$CMD"; $CMD; } || { echo "$USAGE" >&2; exit 1; }
